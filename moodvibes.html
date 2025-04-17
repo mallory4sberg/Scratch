@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>MoodVibes: Quote for Your Mood</title>
+  <style>
+    body {
+      font-family: 'Arial', sans-serif;
+      text-align: center;
+      padding: 50px;
+      background-color: #FFEE93;
+      transition: background-color 0.8s ease;
+      color: #333;
+    }
+
+    h1 {
+      font-size: 2.5em;
+      margin-bottom: 20px;
+    }
+
+    .mood-buttons button {
+      padding: 15px 25px;
+      margin: 10px;
+      border: none;
+      border-radius: 50px;
+      font-size: 1.2em;
+      cursor: pointer;
+      color: white;
+      transition: transform 0.2s;
+    }
+
+    .mood-buttons button:hover {
+      transform: scale(1.1);
+    }
+
+    .quote {
+      margin-top: 40px;
+      font-size: 1.8em;
+      opacity: 0;
+      transition: opacity 0.8s ease;
+    }
+
+    .visible {
+      opacity: 1;
+    }
+
+    .music-toggle {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      padding: 10px 20px;
+      background: #222;
+      color: #fff;
+      border: none;
+      border-radius: 25px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>🌈 MoodVibes</h1>
+  <p>Pick your mood to get a vibe-matching quote!</p>
+
+  <div class="mood-buttons">
+    <button style="background-color: #FF6B6B;" onclick="showQuote('happy')">Happy 😊</button>
+    <button style="background-color: #4D96FF;" onclick="showQuote('sad')">Sad 😢</button>
+    <button style="background-color: #6BCB77;" onclick="showQuote('chill')">Chill 😎</button>
+    <button style="background-color: #FFD93D;" onclick="showQuote('motivated')">Motivated 💪</button>
+  </div>
+
+  <div class="quote" id="quoteBox"></div>
+
+  <button class="music-toggle" onclick="toggleMusic()">🎵 Music: Off</button>
+
+  <audio id="backgroundMusic" loop>
+    <source src="https://cdn.pixabay.com/download/audio/2023/03/07/audio_f325a4c1c5.mp3?filename=joyful-day-144164.mp3" type="audio/mp3">
+  </audio>
+
+  <script>
+    const quotes = {
+      happy: [
+        "Happiness is not by chance, but by choice.",
+        "Smile — it's contagious!",
+        "Today is a perfect day to be happy."
+      ],
+      sad: [
+        "Tough times never last, but tough people do.",
+        "It's okay to feel sad. Brighter days are ahead.",
+        "Storms make trees take deeper roots."
+      ],
+      chill: [
+        "Breathe in peace, breathe out stress.",
+        "Slow down. You're doing fine.",
+        "Life's better with a calm mind."
+      ],
+      motivated: [
+        "Don't watch the clock; do what it does. Keep going.",
+        "Push yourself, because no one else is going to do it for you.",
+        "Success is the sum of small efforts repeated daily."
+      ]
+    };
+
+    const colors = {
+      happy: "#FF6B6B",
+      sad: "#4D96FF",
+      chill: "#6BCB77",
+      motivated: "#FFD93D"
+    };
+
+    function showQuote(mood) {
+      const quoteList = quotes[mood];
+      const randomIndex = Math.floor(Math.random() * quoteList.length);
+      const quote = quoteList[randomIndex];
+      const quoteBox = document.getElementById("quoteBox");
+      
+      quoteBox.classList.remove("visible");
+      setTimeout(() => {
+        quoteBox.textContent = quote;
+        quoteBox.classList.add("visible");
+        document.body.style.backgroundColor = colors[mood];
+      }, 200);
+    }
+
+    let musicPlaying = false;
+    const music = document.getElementById("backgroundMusic");
+    const toggleButton = document.querySelector(".music-toggle");
+
+    function toggleMusic() {
+      if (musicPlaying) {
+        music.pause();
+        toggleButton.textContent = "🎵 Music: Off";
+      } else {
+        music.play();
+        toggleButton.textContent = "🎵 Music: On";
+      }
+      musicPlaying = !musicPlaying;
+    }
+  </script>
+</body>
+</html>
